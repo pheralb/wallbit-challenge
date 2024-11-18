@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Onest", ...defaultTheme.fontFamily.sans],
+        sans: ["InterVariable", ...defaultTheme.fontFamily.sans],
       },
       animation: {
         "spin-slow": "spin 4s linear infinite",
