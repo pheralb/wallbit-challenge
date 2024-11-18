@@ -1,9 +1,28 @@
 import type { Config } from "tailwindcss";
 
-export default {
+// Plugins:
+import twAnimate from "tailwindcss-animate";
+import defaultTheme from "tailwindcss/defaultTheme";
+
+const config: Config = {
+  darkMode: ["class"],
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Onest", ...defaultTheme.fontFamily.sans],
+      },
+      animation: {
+        "spin-slow": "spin 4s linear infinite",
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+    },
   },
-  plugins: [],
-} satisfies Config;
+  plugins: [twAnimate],
+};
+
+export default config;
