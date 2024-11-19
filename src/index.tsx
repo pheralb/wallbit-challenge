@@ -49,7 +49,7 @@ const Home = () => {
         <div className="flex items-center space-x-2">
           <img src="/assets/tuki.jpg" alt="Tuki" className="h-10 w-10" />
           <h2 className="text-2xl font-medium tracking-tight">
-            Tienda - El Topo
+            Store - El Topo
           </h2>
         </div>
         <div className="grid h-screen grid-cols-1 gap-1 md:h-[60vh] md:grid-cols-[300px,600px] md:gap-3">
