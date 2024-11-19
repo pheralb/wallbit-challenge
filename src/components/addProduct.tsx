@@ -20,7 +20,7 @@ import {
 } from "@/ui/form";
 import { Input } from "@/ui/input";
 import { Button } from "@/ui/button";
-import { Plus } from "@phosphor-icons/react";
+import { Plus } from "@/ui/icons";
 
 const AddProduct = () => {
   const { products, startedDate, startDate, addProduct, updateProduct } =
@@ -81,7 +81,10 @@ const AddProduct = () => {
 
       form.reset();
     } catch (error) {
-      console.error(error);
+      toast.error({
+        text: "An error occurred while adding the product",
+        description: `${error}`,
+      });
     } finally {
       setLoading(false);
     }
@@ -122,6 +125,7 @@ const AddProduct = () => {
               <FormControl>
                 <Input
                   type="number"
+                  min={0}
                   placeholder="Product ID"
                   disabled={loading}
                   {...field}
@@ -133,7 +137,7 @@ const AddProduct = () => {
           )}
         />
         <Button type="submit" disabled={loading}>
-          <Plus weight="regular" size={16} />
+          <Plus size={16} />
           <span>Add</span>
         </Button>
       </form>

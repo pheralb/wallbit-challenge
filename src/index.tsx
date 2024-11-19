@@ -6,7 +6,7 @@ import { cn } from "./utils/cn";
 import AddProduct from "./components/addProduct";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
-import { Ticket, Trash } from "@phosphor-icons/react";
+import { Ticket, Trash } from "@/ui/icons";
 import Product from "./components/product";
 import { useEffect, useState } from "react";
 
@@ -71,7 +71,7 @@ const Home = () => {
                 </h2>
                 {startedDate && (
                   <p className="font-mono text-sm">
-                    {format(startedDate, "short")}
+                    {format(startedDate, { date: "short", time: "short" })}
                   </p>
                 )}
               </div>
