@@ -9,11 +9,18 @@ export interface Product extends ProductForm {
   imageUrl: string;
 }
 
+export interface Discount {
+  name: string;
+  discount: number;
+}
+
 interface ProductStore {
   products: Product[];
   startedDate: Date | null;
   startDate: () => void;
   resetDate: () => void;
+  discount: Discount | null;
+  setDiscount: (discount: Discount | null) => void;
   addProduct: (product: Product) => void;
   updateProduct: (product: Product) => void;
   deleteProduct: (productId: Product["productId"]) => void;
@@ -51,6 +58,11 @@ export const useProducts = create<ProductStore>()(
         clearProducts: () =>
           set(() => ({
             products: [],
+          })),
+        discount: null,
+        setDiscount: (discount) =>
+          set(() => ({
+            discount: discount,
           })),
       }),
       {
