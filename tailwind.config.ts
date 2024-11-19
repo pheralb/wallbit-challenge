@@ -15,11 +15,6 @@ const config: Config = {
       animation: {
         "spin-slow": "spin 4s linear infinite",
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
     },
   },
   plugins: [twAnimate],
