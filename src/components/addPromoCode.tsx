@@ -65,8 +65,8 @@ const AddPromoCode = (props: AddPromoCodeProps) => {
         </DialogHeader>
         <div className="relative">
           <Input
-            placeholder="ABCD"
-            className="w-full pl-10 uppercase"
+            placeholder="and if the coupon is GONCY?"
+            className="w-full pl-10 uppercase placeholder:lowercase"
             onChange={(e) => setPromoCode(e.target.value)}
           />
           <Ticket

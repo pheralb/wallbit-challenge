@@ -34,7 +34,7 @@ const Product = (product: ProducType) => {
   };
 
   return (
-    <div className="relative flex items-center space-x-4 rounded-md border border-neutral-200 p-3 delay-0 duration-500 animate-in fade-in slide-in-from-bottom-4 fill-mode-backwards">
+    <div className="relative flex items-center space-x-4 rounded-md border border-neutral-200 p-3 delay-0 duration-500 animate-in fade-in fill-mode-backwards">
       <img
         src={product.imageUrl}
         alt={product.name}
