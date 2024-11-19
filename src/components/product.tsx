@@ -4,6 +4,7 @@ import { Badge } from "@/ui/badge";
 import { Separator } from "@/ui/separator";
 import { cn } from "@/utils/cn";
 import { Minus, Plus, Tag, Trash } from "@/ui/icons";
+import { toast } from "@pheralb/toast";
 
 const Product = (product: ProducType) => {
   const { deleteProduct, updateProduct } = useProducts();
@@ -25,11 +26,15 @@ const Product = (product: ProducType) => {
   };
 
   const handleClearProduct = () => {
+    toast.success({
+      text: "Product removed",
+      description: `${product.name} has been removed from the cart`,
+    });
     deleteProduct(product.productId);
   };
 
   return (
-    <div className="relative flex items-center space-x-4 rounded-md border border-neutral-200 p-3 duration-500 animate-in slide-in-from-bottom-1">
+    <div className="relative flex items-center space-x-4 rounded-md border border-neutral-200 p-3 delay-0 duration-500 animate-in fade-in slide-in-from-bottom-4 fill-mode-backwards">
       <img
         src={product.imageUrl}
         alt={product.name}
@@ -38,7 +43,7 @@ const Product = (product: ProducType) => {
       <div className="flex w-full flex-col">
         <p
           title={product.name}
-          className="mb-1 max-w-[430px] truncate font-medium"
+          className="mb-1 max-w-[200px] truncate font-medium md:max-w-[430px]"
         >
           {product.quantity > 1 && (
             <span className="mr-2 text-[12px] font-normal text-neutral-500">

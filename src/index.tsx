@@ -1,49 +1,59 @@
 import { format } from "@formkit/tempo";
-
-import { useProducts } from "./store/products";
-import { cn } from "./utils/cn";
-
-import AddProduct from "./components/addProduct";
-import { Separator } from "./ui/separator";
-import { Button } from "./ui/button";
-import { Ticket, Trash } from "@/ui/icons";
-import Product from "./components/product";
 import { useEffect, useState } from "react";
 
+import { useProducts } from "@/store/products";
+import { cn } from "@/utils/cn";
+
+import AddProduct from "@/components/addProduct";
+import Product from "@/components/product";
+import AddPromoCode from "@/components/addPromoCode";
+
+import { Separator } from "@/ui/separator";
+import { Button } from "@/ui/button";
+import { ShoppingBagOpen, Ticket, Trash } from "@/ui/icons";
+import { toast } from "@pheralb/toast";
+
 const Home = () => {
-  const { products, startedDate, resetDate, clearProducts } = useProducts();
-  const sectionClass = cn(
-    "my-3 shadow-sm flex flex-col space-y-3 h-full bg-white",
-  );
+  const { products, startedDate, resetDate, discount, clearProducts } =
+    useProducts();
+  const sectionClass = cn("my-3 shadow-sm flex flex-col space-y-3 bg-white");
   const [totalPrice, setTotalPrice] = useState<number>();
 
   const handleClearProducts = () => {
     clearProducts();
+    toast.success({
+      text: "Cart cleared",
+      description: "All products have been removed from the cart",
+    });
     resetDate();
   };
 
   useEffect(() => {
     const total = products.reduce((acc, product) => {
+      if (discount) {
+        const discountPrice = product.price * (discount.discount / 100);
+        return acc + (product.price - discountPrice) * product.quantity;
+      }
       return acc + product.price * product.quantity;
     }, 0);
     setTotalPrice(total);
-  }, [products]);
+  }, [products, discount]);
 
   return (
     <main
       className={cn(
-        "container mx-auto flex h-[80vh] max-w-4xl flex-col justify-center",
+        "container mx-auto flex h-[screen] max-w-4xl flex-col items-center justify-center px-4 md:h-[85vh] md:px-0",
       )}
     >
-      <div className="h-[50vh] max-h-[50vh]">
+      <div className="flex flex-col justify-center">
         <h2 className="text-2xl font-medium tracking-tight">
           Tienda - El Topo
         </h2>
-        <div className="grid h-full grid-cols-1 gap-3 md:grid-cols-[300px,1fr]">
+        <div className="grid h-full grid-cols-1 gap-1 md:grid-cols-[300px,600px] md:gap-3">
           <section
             className={cn(
               sectionClass,
-              "flex h-full flex-col space-y-[10px] rounded-md border border-neutral-200 p-3",
+              "flex flex-col space-y-[10px] rounded-md border border-neutral-200 p-3",
             )}
           >
             <div className="flex-1 border-b border-neutral-200">
@@ -53,60 +63,82 @@ const Home = () => {
               <AddProduct />
             </div>
             <div className="flex flex-col space-y-2">
-              <Button variant="outline">
-                <Ticket weight="regular" size={18} />
-                <span>Add promo code</span>
-              </Button>
+              <AddPromoCode>
+                <Button variant="outline">
+                  <Ticket size={18} />
+                  {discount ? (
+                    <span>Edit Promo Code</span>
+                  ) : (
+                    <span>Add Promo Code</span>
+                  )}
+                </Button>
+              </AddPromoCode>
               <Button variant="outline" onClick={handleClearProducts}>
-                <Trash weight="regular" size={18} />
+                <Trash size={18} />
                 <span>Clear Products</span>
               </Button>
             </div>
           </section>
-          <section className={cn(sectionClass, "flex h-full flex-col")}>
-            <div className="flex h-full flex-col rounded-md border border-neutral-200 p-3">
-              <div className="mb-4 flex w-full items-center justify-between">
-                <h2 className="text-xl font-semibold tracking-tight text-neutral-500">
-                  My Cart {products.length > 0 && `(${products.length})`}
-                </h2>
-                {startedDate && (
-                  <p className="font-mono text-sm">
-                    {format(startedDate, { date: "short", time: "short" })}
+          <section
+            className={cn(
+              sectionClass,
+              "flex flex-col rounded-md border border-neutral-200 p-3",
+            )}
+          >
+            <div className="mb-4 flex w-full items-center justify-between">
+              <h2 className="text-xl font-semibold tracking-tight text-neutral-500">
+                My Cart {products.length > 0 && `(${products.length})`}
+              </h2>
+              {startedDate && (
+                <p className="font-mono text-sm">
+                  {format(startedDate, { date: "short", time: "short" })}
+                </p>
+              )}
+            </div>
+            <div className="mb-3 max-h-[50vh] flex-1 overflow-y-auto">
+              {products.length === 0 ? (
+                <div className="flex h-full flex-col items-center justify-center space-y-1 py-4">
+                  <ShoppingBagOpen strokeWidth={1.5} size={35} />
+                  <p className="text-lg font-semibold text-neutral-500">
+                    No products added
                   </p>
-                )}
-              </div>
-
-              {/* Contenedor para productos con scroll */}
-              <div className="max-h-[45vh] flex-1 overflow-y-auto">
-                {products.length === 0 ? (
-                  <p>No hay productos en el carrito</p>
-                ) : (
-                  <div
-                    className={cn(
-                      "space-y-2 pb-2",
-                      products.length > 3 && "mr-2",
-                    )}
-                  >
-                    {products.map((product) => (
-                      <Product key={product.productId} {...product} />
-                    ))}
-                  </div>
-                )}
-              </div>
-              {products.length > 0 && (
-                <div className="flex flex-col space-y-3">
-                  <Separator />
-                  {totalPrice && (
-                    <div className="flex items-center justify-between">
-                      <p className="tracking-tight">Total</p>
-                      <p className="text-lg font-semibold tracking-tight">
-                        ${totalPrice.toFixed(2)}
-                      </p>
-                    </div>
+                </div>
+              ) : (
+                <div
+                  className={cn(
+                    "space-y-2 pb-2",
+                    products.length > 3 && "mr-2",
                   )}
+                >
+                  {products.map((product) => (
+                    <Product key={product.productId} {...product} />
+                  ))}
                 </div>
               )}
             </div>
+            {products.length > 0 && (
+              <div className="flex flex-col">
+                <Separator className="mb-2" />
+                {discount && (
+                  <div className="my-1 flex items-center justify-between">
+                    <p className="text-sm tracking-tight">
+                      Discount ({discount.name})
+                    </p>
+                    <p className="tracking-tight text-green-800">
+                      {discount.discount}%
+                    </p>
+                  </div>
+                )}
+                {totalPrice && (
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm tracking-tight">Total</p>
+                    <p className="text-lg font-semibold tracking-tight">
+                      ${totalPrice.toFixed(2)}
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
           </section>
         </div>
       </div>

@@ -8,7 +8,7 @@ import "@/styles/globals.css";
 import { Toaster } from "@pheralb/toast";
 
 // Layout:
-import Header from "@/components/header";
+import { Header, Footer } from "@/components/layout";
 
 // Main Page:
 import Home from "@/index";
@@ -17,6 +17,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Header />
     <Home />
+    <Footer />
     <Toaster toastFont="font-sans" position="bottom-right" theme="light" />
   </StrictMode>,
 );
