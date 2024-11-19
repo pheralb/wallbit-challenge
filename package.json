@@ -13,7 +13,6 @@
     "@formkit/tempo": "0.1.2",
     "@hookform/resolvers": "3.9.1",
     "@pheralb/toast": "0.2.3",
-    "@phosphor-icons/react": "2.1.7",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-label": "2.1.0",
     "@radix-ui/react-separator": "^1.1.0",
