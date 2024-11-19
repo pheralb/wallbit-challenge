@@ -69,8 +69,12 @@ const AddProduct = () => {
       };
 
       if (products.some((product) => product.productId === values.productId)) {
+        // Increment the quantity of the product
         updateProduct({
           ...values,
+          quantity:
+            products.find((product) => product.productId === values.productId)!
+              .quantity + values.quantity,
           ...dataResponse,
         });
       } else {
