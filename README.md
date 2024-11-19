@@ -1,4 +1,6 @@
 <div align="center">
+<img src="./public/assets/readme_image.png">
+
 <p></p>
 
 <a href="#">Deploy</a>
