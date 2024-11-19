@@ -1,4 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
+
+/**
+ * 📦 Icons from Phosphor Icons (https://phosphoricons.com).
+ * 🤔 Why don't use the official package? The following problem occurs at Vercel and other hosting providers:
+ * ⚠️ Error: EMFILE: too many open files
+ */
+
 import type { SVGProps } from "react";
 
 interface Props extends SVGProps<SVGSVGElement> {
