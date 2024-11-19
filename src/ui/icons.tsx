@@ -116,4 +116,21 @@ const X = (props: Props) => {
   );
 };
 
-export { Ticket, Trash, Plus, Minus, Tag, X };
+const ShoppingBagOpen = (props: Props) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={props.size || mainSize}
+      height={props.size || mainSize}
+      viewBox="0 0 256 256"
+      {...props}
+    >
+      <path
+        fill="currentColor"
+        d="M216 42H40a14 14 0 0 0-14 14v144a14 14 0 0 0 14 14h176a14 14 0 0 0 14-14V56a14 14 0 0 0-14-14M40 54h176a2 2 0 0 1 2 2v18H38V56a2 2 0 0 1 2-2m176 148H40a2 2 0 0 1-2-2V86h180v114a2 2 0 0 1-2 2m-42-90a46 46 0 0 1-92 0 6 6 0 0 1 12 0 34 34 0 0 0 68 0 6 6 0 0 1 12 0"
+      ></path>
+    </svg>
+  );
+};
+
+export { Ticket, Trash, Plus, Minus, Tag, X, ShoppingBagOpen };
