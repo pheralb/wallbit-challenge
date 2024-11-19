@@ -19,13 +19,19 @@ import {
   FormMessage,
 } from "@/ui/form";
 import { Input } from "@/ui/input";
-import { Button } from "@/ui/button";
-import { Plus } from "@/ui/icons";
+import { Button, buttonVariants } from "@/ui/button";
+import { Caret, Plus, Question } from "@/ui/icons";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/ui/collapsible";
 
 const AddProduct = () => {
   const { products, startedDate, startDate, addProduct, updateProduct } =
     useProducts();
   const [loading, setLoading] = useState<boolean>(false);
+  const [suggestions, setSuggestions] = useState<boolean>(false);
 
   const form = useForm<ProductForm>({
     resolver: zodResolver(productFormSchema),
@@ -91,57 +97,94 @@ const AddProduct = () => {
   };
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmitProduct)}
-        className="flex flex-col space-y-4"
-      >
-        <FormField
-          control={form.control}
-          name="quantity"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Quantity</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  placeholder="Quantity"
-                  min={1}
-                  disabled={loading}
-                  {...field}
-                  onChange={(event) => field.onChange(+event.target.value)}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="productId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Product ID</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  min={0}
-                  placeholder="Product ID"
-                  disabled={loading}
-                  {...field}
-                  onChange={(event) => field.onChange(+event.target.value)}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" disabled={loading}>
-          <Plus size={16} />
-          <span>Add</span>
-        </Button>
-      </form>
-    </Form>
+    <div className="flex flex-col space-y-2">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(handleSubmitProduct)}
+          className="flex flex-col space-y-4"
+        >
+          <FormField
+            control={form.control}
+            name="quantity"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Quantity</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="Quantity"
+                    min={1}
+                    disabled={loading}
+                    {...field}
+                    onChange={(event) => field.onChange(+event.target.value)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="productId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Product ID</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    min={0}
+                    placeholder="Product ID"
+                    disabled={loading}
+                    {...field}
+                    onChange={(event) => field.onChange(+event.target.value)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" disabled={loading}>
+            <Plus size={16} />
+            <span>Add</span>
+          </Button>
+        </form>
+      </Form>
+      <Collapsible open={suggestions} onOpenChange={setSuggestions}>
+        <CollapsibleTrigger
+          className={buttonVariants({
+            variant: "outline",
+            size: "default",
+            className: "w-full justify-between shadow-none",
+          })}
+        >
+          <div className="flex items-center space-x-2">
+            <Question size={18} />
+            <span>Suggestions</span>
+          </div>
+          <Caret size={16} className={suggestions ? "rotate-180" : ""} />
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <div className="mt-2 rounded-md border border-dashed border-neutral-200 p-2">
+            <Button
+              variant="ghost"
+              size="default"
+              className="w-full font-medium"
+              onClick={() => handleSubmitProduct({ quantity: 1, productId: 1 })}
+            >
+              Foldsack No. 1 Backpack
+            </Button>
+            <Button
+              variant="ghost"
+              size="default"
+              className="w-full font-medium"
+              onClick={() => handleSubmitProduct({ quantity: 1, productId: 4 })}
+            >
+              Mens Casual Slim Fit
+            </Button>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
   );
 };
 

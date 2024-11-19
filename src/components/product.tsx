@@ -94,7 +94,7 @@ const Product = (product: ProducType) => {
               </div>
             </nav>
           </div>
-          <p className="text-lg font-semibold tracking-tight">
+          <p className="font-mono font-medium tracking-tight">
             ${product.price * product.quantity}
           </p>
         </div>

@@ -49,7 +49,7 @@ const Home = () => {
         <h2 className="text-2xl font-medium tracking-tight">
           Tienda - El Topo
         </h2>
-        <div className="grid h-full grid-cols-1 gap-1 md:grid-cols-[300px,600px] md:gap-3">
+        <div className="grid h-screen grid-cols-1 gap-1 md:h-[60vh] md:grid-cols-[300px,600px] md:gap-3">
           <section
             className={cn(
               sectionClass,
@@ -73,7 +73,11 @@ const Home = () => {
                   )}
                 </Button>
               </AddPromoCode>
-              <Button variant="outline" onClick={handleClearProducts}>
+              <Button
+                variant="outline"
+                onClick={handleClearProducts}
+                disabled={!products.length}
+              >
                 <Trash size={18} />
                 <span>Clear Products</span>
               </Button>
@@ -122,9 +126,10 @@ const Home = () => {
                 {discount && (
                   <div className="my-1 flex items-center justify-between">
                     <p className="text-sm tracking-tight">
-                      Discount ({discount.name})
+                      Discount{" "}
+                      <span className="font-mono">({discount.name})</span>
                     </p>
-                    <p className="tracking-tight text-green-800">
+                    <p className="font-mono tracking-tight text-green-800">
                       {discount.discount}%
                     </p>
                   </div>
@@ -132,7 +137,7 @@ const Home = () => {
                 {totalPrice && (
                   <div className="flex items-center justify-between">
                     <p className="text-sm tracking-tight">Total</p>
-                    <p className="text-lg font-semibold tracking-tight">
+                    <p className="font-mono text-lg font-semibold tracking-tight">
                       ${totalPrice.toFixed(2)}
                     </p>
                   </div>
