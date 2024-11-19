@@ -11,6 +11,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["InterVariable", ...defaultTheme.fontFamily.sans],
+        mono: ["GeistMono", ...defaultTheme.fontFamily.mono],
       },
       animation: {
         "spin-slow": "spin 4s linear infinite",
